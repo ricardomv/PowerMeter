@@ -8,6 +8,7 @@
 #include <p33FJ64GP802.h>
 #include "common.h"
 #include "uart.h"
+#include "adc.h"
 
 _FOSCSEL(FNOSC_PRI);
 _FOSC(FCKSM_CSECMD & OSCIOFNC_ON  & POSCMD_NONE);
@@ -40,7 +41,7 @@ int main(void)
                 writeStringUART1("INFO\n\r");
                 break;
             case 1: // DEBUG - enable debug
-                debug ^= 1;
+                debug ^= -1;
                 if( debug ) {
                     writeStringUART1("Debug Enabled\n\r");
                 }
@@ -50,6 +51,7 @@ int main(void)
                 break;
             case 2: // AQUIRE - print sensor valuess
                 writeStringUART1("AQUIRE\n\r");
+                aquireADC(0);
                 break;
             default:
                 break;
