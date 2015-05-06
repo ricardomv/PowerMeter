@@ -16,7 +16,7 @@ _FWDT(FWDTEN_OFF);
 
 const char *commands[] = {"INFO", "DEBUG", "AQUIRE", 0};
 
-int debug = 0;
+int debug = 1;
 
 int main(void)
 {
@@ -30,8 +30,11 @@ int main(void)
     while (OSCCONbits.LOCK != 1); // Wait for PLL to lock
 
     initUART1();
+    initTimer3();
+    initADC1();
+    initDma0();
 
-    writeStringUART1("Power Meter v0.1");
+    writeStringUART1("Power Meter v0.1s");
     writeStringUART1(" (compiled " __TIME__ " " __DATE__ ")\n\r");
 
     while(1)
@@ -50,7 +53,6 @@ int main(void)
                 }
                 break;
             case 2: // AQUIRE - print sensor valuess
-                writeStringUART1("AQUIRE\n\r");
                 aquireADC(0);
                 break;
             default:

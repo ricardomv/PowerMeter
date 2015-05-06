@@ -8,6 +8,9 @@
 #ifndef ADC_H
 #define	ADC_H
 
+void initADC1(void);
+void initTimer3(void);
+void initDma0(void);
 void aquireADC(int);
 
 #endif	/* ADC_H */
