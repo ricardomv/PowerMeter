@@ -31,8 +31,8 @@ int main(void)
 
     initUART1();
     initTimer3();
-    initADC1();
     initDma0();
+    initADC1();
 
     writeStringUART1("Power Meter v0.1s");
     writeStringUART1(" (compiled " __TIME__ " " __DATE__ ")\n\r");
