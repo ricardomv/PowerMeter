@@ -9,6 +9,7 @@
 #include "common.h"
 #include "uart.h"
 #include "adc.h"
+#include "calc.h"
 
 _FOSCSEL(FNOSC_PRI);
 _FOSC(FCKSM_CSECMD & OSCIOFNC_ON  & POSCMD_NONE);
@@ -34,7 +35,7 @@ int main(void)
     initDma0();
     initADC1();
 
-    writeStringUART1("Power Meter v0.1s");
+    writeStringUART1("Power Meter v0.1");
     writeStringUART1(" (compiled " __TIME__ " " __DATE__ ")\n\r");
 
     while(1)
@@ -44,7 +45,7 @@ int main(void)
                 writeStringUART1("INFO\n\r");
                 break;
             case 1: // DEBUG - enable debug
-                debug ^= -1;
+                debug ^= 1;
                 if( debug ) {
                     writeStringUART1("Debug Enabled\n\r");
                 }

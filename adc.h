@@ -8,6 +8,10 @@
 #ifndef ADC_H
 #define	ADC_H
 
+#define NSAMPLES 128
+#define VOLTAGE 0
+#define CURRENT 1
+
 void initADC1(void);
 void initTimer3(void);
 void initDma0(void);
