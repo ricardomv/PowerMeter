@@ -9,6 +9,6 @@ except serial.SerialException as e:
     print("could not open serial port '{}': {}".format(com_port, e))
 
 while True:
-    port.write("INFO\n".encode('ascii'))
+    port.write('DEBUG\r\n'.encode('ascii'))
     rcv = port.readline()
-    print 'Recieved: ' + repr(rcv)
+    print("Recieved: " + rcv.decode('ascii'))
