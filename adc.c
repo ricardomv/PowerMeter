@@ -1,4 +1,4 @@
-#include <p33FJ64GP802.h>
+#include <p33FJ32GP302.h>
 #include <stdio.h>
 #include <math.h>
 

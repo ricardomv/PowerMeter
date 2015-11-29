@@ -4,6 +4,7 @@
 #include "common.h"
 #include "adc.h"
 #include "fft.h"
+#include <p33FJ32GP302.h>
 
 #define TRANSF_RATIO 25.4663
 

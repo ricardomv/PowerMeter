@@ -5,7 +5,7 @@
  * Created on May 2, 2015, 10:53 PM
  */
 
-#include <p33FJ64GP802.h>
+#include <p33FJ32GP302.h>
 #include "common.h"
 #include "uart.h"
 #include "adc.h"
