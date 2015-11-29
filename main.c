@@ -35,22 +35,22 @@ int main(void)
     initDma0();
     initADC1();
 
-    writeStringUART1("Power Meter v0.1");
-    writeStringUART1(" (compiled " __TIME__ " " __DATE__ ")\n\r");
+    writeStringUART1("\nPower Meter v0.1");
+    writeStringUART1(" (compiled " __TIME__ " " __DATE__ ")\r\n");
 
     while(1)
     {
         switch (getCommandUART1()) {
             case 0: // INFO - print calibration data
-                writeStringUART1("INFO\n\r");
+                writeStringUART1("INFO\r\n");
                 break;
             case 1: // DEBUG - enable debug
                 debug ^= 1;
                 if( debug ) {
-                    writeStringUART1("Debug Enabled\n\r");
+                    writeStringUART1("Debug Enabled\r\n");
                 }
                 else {
-                    writeStringUART1("Debug Disabled\n\r");
+                    writeStringUART1("Debug Disabled\r\n");
                 }
                 break;
             case 2: // AQUIRE - print sensor valuess
