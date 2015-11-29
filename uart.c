@@ -1,4 +1,4 @@
-#include <p33FJ64GP802.h>
+#include <p33FJ32GP302.h>
 #include <math.h>
 #include <pps.h>
 #include <string.h>
@@ -82,7 +82,7 @@ int getCommandUART1(void)
 
     // find command in array of commands
     for(i = 0; commands[i] != 0; i++) {
-        if ( !strcmp(buf, commands[i]) )
+        if ( strcmp(buf, commands[i]) >= 0 )
             return i;
     }
 

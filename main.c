@@ -15,7 +15,7 @@ _FOSCSEL(FNOSC_PRI);
 _FOSC(FCKSM_CSECMD & OSCIOFNC_ON  & POSCMD_NONE);
 _FWDT(FWDTEN_OFF);
 
-const char *commands[] = {"INFO", "DEBUG", "AQUIRE", 0};
+const char *commands[] = {"INFO\0", "DEBUG\0", "AQUIRE\0", 0};
 
 int debug = 1;
 
