@@ -34,3 +34,7 @@ NTP synchronized: no
 ```
 ACTION=="add", SUBSYSTEM=="i2c", ATTR{name}=="<contents of file /sys/class/i2c-adapter/i2c-1/name>", ATTR{new_device}="ds1307 0x68"
 ```
+
+ - Finally create a new systemd service to update the system clock on boot in
+`/etc/systemd/system/clock-sync.service`
+
