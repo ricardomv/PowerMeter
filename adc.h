@@ -9,8 +9,8 @@
 #define	ADC_H
 
 #define NSAMPLES 128
-#define VOLTAGE 0
-#define CURRENT 1
+#define CURRENT 0
+#define VOLTAGE 1
 
 void initADC1(void);
 void initTimer3(void);

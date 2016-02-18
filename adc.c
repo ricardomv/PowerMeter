@@ -92,25 +92,33 @@ void initADC1( void )
     AD1CON2bits.CHPS = 1;   // Channel - dual channel
     AD1CON3bits.ADRC = 0;   // ADC Conversion Clock Source bit
 
-    TRISAbits.TRISA0 = 1;
-    TRISAbits.TRISA1 = 1;
+    TRISAbits.TRISA0 = 1;  // Voltage CH1
+    TRISAbits.TRISA1 = 1;  // Voltage CH2
+    TRISBbits.TRISB0 = 1;  // Voltage CH3
+    TRISBbits.TRISB15 = 1;  // Current CH1
 
     AD1CON1bits.ADDMABM = 1; // DMA Buffer Build Mode bit
-    AD1CON2bits.SMPI = 2; // Increments the DMA address after completion of every 2nd sample/conversion
+    AD1CON2bits.SMPI = 1; // Increments the DMA address after completion of every 2nd sample/conversion
+    AD1CON2bits.VCFG = 0;
     //AD1CON4bits.DMABL = 7;
 
     // Initialize MUXA Input Selection
-    AD1CHS0bits.CH0SA = 1; // Select AN1 for CH0 +ve input
+    AD1CHS0bits.CH0SA = 9; // Select AN1 for CH0 +ve input
     AD1CHS0bits.CH0NA = 0; // Select VREF- for CH0 -ve input
     AD1CHS123bits.CH123SA = 0; // AN0 for CH1 +ve input
     AD1CHS123bits.CH123NA = 0;
 
     AD1PCFGL = 0xFFFF;
+    AD1PCFGLbits.PCFG9 = 0; // AN9 as Analog Input
     AD1PCFGLbits.PCFG0 = 0; // AN0 as Analog Input
-    AD1PCFGLbits.PCFG1 = 0; // AN1 as Analog Input
+    AD1PCFGLbits.PCFG2 = 0; // AN3 as Analog Input
     IFS0bits.AD1IF = 0;  // Clear interrupt flag
     IEC0bits.AD1IE = 0;  // Disable ADC interrupt
     AD1CON1bits.ADON = 1; // Enable ADC
+}
+
+void setChannel(int chV, int chC) {
+    AD1CON1bits.ADON = 0;
 }
 
 void initTimer3(void)
@@ -146,27 +154,27 @@ void printArray()
 {
     int i;
     char str[50];
-    Debug("ADC voltage values:\n\r");
+    Debug("ADC voltage values:\r\n");
     for(i=0; i < NSAMPLES; i++) {
         sampleVArray[i] = sampleArray[i][VOLTAGE];
-        sprintf(str, "%d\n\r", sampleVArray[i]);
+        sprintf(str, "%d\r\n", sampleVArray[i]);
         Debug(str);
     }
-    Debug("\n\rADC current values:\n\r");
+    Debug("\r\nADC current values:\r\n");
     for(i=0; i < NSAMPLES; i++) {
         sampleCArray[i] = sampleArray[i][CURRENT];
-        sprintf(str, "%d\n\r", sampleCArray[i]);
+        sprintf(str, "%d\r\n", sampleCArray[i]);
         Debug(str);
     }
-    Debug("\n\r");
+    Debug("\r\n");
 }
 
+void computeSample (void);
 void aquireADC(int channel)
 {
     sampleReady = 0;
     AD1CON1bits.ADON = 1; // Enable ADC
-    while(sampleReady == 0)
-        Debug("Wait for sampling.\n\r");
+    while(sampleReady == 0);
     printArray();
     computeSample();
 }

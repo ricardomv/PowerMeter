@@ -1,6 +1,5 @@
 #include <p33FJ32GP302.h>
 #include <math.h>
-#include <pps.h>
 #include <string.h>
 
 #include "common.h"
@@ -16,8 +15,8 @@ extern const char *commands[];
 
 void initUART1(void)
 {
-    RPINR18bits.U1RXR = IN_PIN_PPS_RP8; // Assign RP8 as Input Pin as UART 1 input.
-    RPOR4bits.RP9R = OUT_FN_PPS_U1TX; // RP9 tied to UART1 Transmit
+    RPINR18bits.U1RXR = 8; // Assign RP8 as Input Pin as UART 1 input.
+    RPOR4bits.RP9R = 3; // RP9 tied to UART1 Transmit
     TRISBbits.TRISB8 = 1;
     TRISBbits.TRISB9 = 0;
     U1MODEbits.STSEL = 0; // 1 Stop bit
