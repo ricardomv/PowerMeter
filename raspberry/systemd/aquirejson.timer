@@ -1,0 +1,9 @@
+[Unit]
+Description=Trigger fetch sensor data and parse it to a json file
+
+[Timer]
+OnCalendar=minutely
+
+[Install]
+WantedBy=basic.target
+

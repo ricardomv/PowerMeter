@@ -1,0 +1,7 @@
+[Unit]
+Description=Fetch sensor data and parse it to a json file
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/readsensors.py
+

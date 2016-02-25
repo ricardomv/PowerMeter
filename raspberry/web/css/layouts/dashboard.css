@@ -1,0 +1,59 @@
+.pure-menu {
+    font-weight: lighter;
+}
+.pure-menu.pure-menu-fixed {
+    position: fixed;
+}
+.pure-menu.pure-menu-blackbg {
+    background: #222;
+}
+.pure-menu.pure-menu-blackbg .pure-menu-heading:hover {
+    color: #efefef;
+}
+.pure-menu.pure-menu-blackbg a {
+    color: #fff;
+}
+.pure-menu.pure-menu-blackbg a:hover {
+    background: #666;
+}
+.pure-menu.pure-menu-blackbg .pure-menu-selected a {
+    background: #7E45D3;
+}
+.pure-menu.pure-menu-blackbg .pure-menu-selected a:hover {
+    color: #efefef;
+}
+
+.dashboard-piece-logo h1 {
+    line-height: 100px;
+}
+.dashboard-piece-logo svg {
+    margin-top: 80px;
+}
+.dashboard-piece h1 {
+    line-height: 300px;
+    font-size: 3.6em;
+    margin: 0;
+}
+.dashboard-content {
+    position: relative;
+    z-index: 999;
+}
+.dashboard-content p {
+    font-weight: lighter;
+}
+.dashboard-content .light {
+    opacity: 0.4;
+    display: block;
+}
+.dashboard-content h2 i {
+    font-size: 4em;
+    opacity: 0.4;
+}
+.dashboard-metric {
+    text-transform: uppercase;
+    font-size: 1.6em;
+    line-height: 1;
+}
+.dashboard-metric i {
+    margin-right: 0.6em;
+}
