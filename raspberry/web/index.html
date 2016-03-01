@@ -78,11 +78,11 @@
         request.send(null)
         var DATA = JSON.parse(request.responseText);
         INST_VOLT = document.getElementById('inst_voltage');
-        Plotly.plot( INST_VOLT, [{
+        Plotly.newPlot( INST_VOLT, [{
                      y: DATA["voltage"] }], {
                      margin: { t: 0 } } );
         INST_CURR = document.getElementById('inst_current');
-        Plotly.plot( INST_CURR, [{
+        Plotly.newPlot( INST_CURR, [{
                      y: DATA["current"] }], {
                      margin: { t: 0 } } );
         document.getElementById("voltage_rms").innerHTML = "Vrms: " + DATA["voltage_rms"];
