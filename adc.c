@@ -41,9 +41,15 @@ void initADC1( void )
     AD1CHS123bits.CH123NA = 0;
 
     AD1PCFGL = 0xFFFF;
-    AD1PCFGLbits.PCFG9 = 0; // AN9 as Analog Input
-    AD1PCFGLbits.PCFG0 = 0; // AN0 as Analog Input
+    AD1PCFGLbits.PCFG0 = 0; // AN0 pin as Analog Input
     AD1PCFGLbits.PCFG2 = 0; // AN3 as Analog Input
+    AD1PCFGLbits.PCFG3 = 0; // AN9 as Analog Input
+    AD1PCFGLbits.PCFG4 = 0; // AN9 as Analog Input
+    AD1PCFGLbits.PCFG5 = 0; // AN0 as Analog Input
+    AD1PCFGLbits.PCFG9 = 0; // AN3 as Analog Input
+    AD1PCFGLbits.PCFG10 = 0; // AN3 as Analog Input
+    AD1PCFGLbits.PCFG11 = 0; // AN3 as Analog Input
+    AD1PCFGLbits.PCFG12 = 0; // AN3 as Analog Input
     IFS0bits.AD1IF = 0;  // Clear interrupt flag
     IEC0bits.AD1IE = 0;  // Disable ADC interrupt
     AD1CON1bits.ADON = 1; // Enable ADC
@@ -101,14 +107,16 @@ void printArray()
     Debug("\r\n");
 }
 
-void computeSample (void);
+void computeSample (int v_ch, int i_ch);
 void aquireADC(int channel)
 {
+    int AN_adc[7] =  {3, 4, 5, 9, 10, 11, 12};
     sampleReady = 0;
+    AD1CHS0bits.CH0SA = AN_adc[channel];
     AD1CON1bits.ADON = 1; // Enable ADC
     while(sampleReady == 0);
     printArray();
-    computeSample();
+    computeSample(0,channel);
 }
 
 void __attribute__((__interrupt__,no_auto_psv)) _DMA0Interrupt(void)

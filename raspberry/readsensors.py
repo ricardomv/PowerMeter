@@ -5,6 +5,7 @@ import time, json
 
 DATA_PATH = "/srv/http"
 NSAMPLES = 128
+CHANNEL = "3"
 
 try:
     port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=3.0)
@@ -13,7 +14,7 @@ except serial.SerialException as e:
 
 port.xonxoff = False
 
-port.write('\rAQUIRE\r\n'.encode('ascii'))
+port.write(('\rAQUIRE ' + CHANNEL + '\r\n').encode('ascii'))
 
 rcv = port.readline()
 line = rcv.decode('ascii')
@@ -39,7 +40,7 @@ while "current_rms" not in line:
 
 current_rms = float(line[12:])
 
-output_file = open(DATA_PATH + '/sensor_data.json', 'w+')
+output_file = open(DATA_PATH + '/sensor_data_' + CHANNEL + '.json', 'w+')
 output_file.write(json.dumps({"voltage": voltages, "current": currents, "voltage_rms": voltage_rms, "current_rms": current_rms, "date": time.asctime()}, indent=4))
 output_file.close()
 
