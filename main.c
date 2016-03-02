@@ -54,7 +54,7 @@ int main(void)
                 }
                 break;
             case 2: // AQUIRE - print sensor valuess
-                aquireADC(0);
+                aquireADC(getChannelUART1());
                 break;
             default:
                 break;

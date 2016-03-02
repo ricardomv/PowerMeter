@@ -6,7 +6,7 @@
 #include "uart.h"
 
 #define FCY (unsigned long)40000000
-#define UART1_BAUD 9600
+#define UART1_BAUD 115200
 #define UBRG1_VALUE (FCY/UART1_BAUD)/16 - 1
 
 int commandBufIdx = 0, commandRX = FALSE;
@@ -57,7 +57,7 @@ void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void)
     commandBuf[commandBufIdx] = U1RXREG;
 
 
-    if(commandBuf[commandBufIdx] == 13) {
+    if(commandBuf[commandBufIdx] == '\r') {
         commandBuf[commandBufIdx] = '\0';
         commandRX = TRUE;
         commandBufIdx = 0;
@@ -87,4 +87,13 @@ int getCommandUART1(void)
 
     // error command not found
     return -1;
+}
+
+int getChannelUART1(void)
+{
+    int channel;
+
+    sscanf(commandBuf, "AQUIRE %d", &channel);
+
+    return channel;
 }

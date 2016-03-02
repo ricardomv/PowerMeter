@@ -7,7 +7,7 @@
 
     <title>Smart Meter &ndash; Layout Examples &ndash; Pure</title>
 
-<link rel="stylesheet" href="css/pure-min.css">
+    <link rel="stylesheet" href="css/pure-min.css">
 
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="css/layouts/side-menu-old-ie.css">
@@ -44,9 +44,16 @@
         <div class="header">
             <h1 id="hostname"></h1>
             <h2>Real time data from aquisition board.</h2>
+                    <a onclick="reload_data(0)" class="pure-button">Channel 0</a>
+                    <a onclick="reload_data(1)" class="pure-button">Channel 1</a>
+                    <a onclick="reload_data(2)" class="pure-button">Channel 2</a>
+                    <a onclick="reload_data(3)" class="pure-button">Channel 3</a>
+                    <a onclick="reload_data(4)" class="pure-button">Channel 4</a>
+                    <a onclick="reload_data(5)" class="pure-button">Channel 5</a>
+                    <a onclick="reload_data(6)" class="pure-button">Channel 6</a>
         </div>
 
-        <h2 class="content-subhead" style="margin-left: 50px">Channel 1</h2>
+        <h2 id="channel_num" class="content-subhead" style="margin-left: 50px"></h2>
         <div style="width: 90%; overflow: hidden; margin-left: auto; margin-right: auto">
             <div style="width: 50%; float: left; text-align: center">
                 Voltage
@@ -58,7 +65,6 @@
                 <div id="inst_current"></div>
                 <h1 id="current_rms"></h1>
             </div>
-            <a onclick="reload_data()" class="pure-button">Reload Data</a>
         </div>
     </div>
     <footer style="text-align: center">
@@ -70,11 +76,11 @@
 <script>
     function init() {
         document.getElementById("hostname").innerHTML = location.hostname;
-        reload_data();
+        reload_data(0);
     }
-    function reload_data() {
+    function reload_data(channel) {
         var request = new XMLHttpRequest();
-        request.open("GET", "sensor_data.json", false);
+        request.open("GET", "sensor_data_" + channel +".json", false);
         request.send(null)
         var DATA = JSON.parse(request.responseText);
         INST_VOLT = document.getElementById('inst_voltage');
@@ -88,6 +94,7 @@
         document.getElementById("voltage_rms").innerHTML = "Vrms: " + DATA["voltage_rms"];
         document.getElementById("current_rms").innerHTML = "Irms: " + DATA["current_rms"];
         document.getElementById("aq_date").innerHTML = DATA["date"];
+        document.getElementById("channel_num").innerHTML = "Channel " + channel;
     }
 </script>
 <script src="js/ui.js"></script>
