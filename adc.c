@@ -8,7 +8,6 @@
 int sampleArray[NSAMPLES][2] __attribute__((space(dma),aligned(32)));
 
 int sampleVArray[NSAMPLES] = { 0 };
-
 int sampleCArray[NSAMPLES] = { 0 };
 
 int sampleReady = 0;
@@ -58,7 +57,7 @@ void initTimer3(void)
 {
     TRISBbits.TRISB15 = 0;
     TMR3 = 0x0000;
-    PR3 = 60; // Trigger ADC1 every 125usec
+    PR3 = 100; // Trigger ADC1 every 125usec
     T3CONbits.TCKPS = 3;
     IFS0bits.T3IF = 0; // Clear Timer 3 interrupt
     IEC0bits.T3IE = 0; // Disable Timer 3 interrupt

@@ -7,7 +7,7 @@ DATA_PATH = "/srv/http"
 NSAMPLES = 128
 
 try:
-    port = serial.Serial("/dev/ttyAMA0", baudrate=115000, timeout=3.0)
+    port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=3.0)
 except serial.SerialException as e:
     print("could not open serial port '{}': {}".format(com_port, e))
 
@@ -46,4 +46,3 @@ output_file.close()
 power_fd = open(DATA_PATH + "/rms_values.csv", 'a+')
 power_fd.write(str(voltage_rms) + ", " + str(current_rms) + "\n")
 power_fd.close()
-
