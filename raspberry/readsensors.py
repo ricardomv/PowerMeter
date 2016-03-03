@@ -41,7 +41,11 @@ while "current_rms" not in line:
 current_rms = float(line[12:])
 
 output_file = open(DATA_PATH + '/sensor_data_' + CHANNEL + '.json', 'w+')
-output_file.write(json.dumps({"voltage": voltages, "current": currents, "voltage_rms": voltage_rms, "current_rms": current_rms, "date": time.asctime()}, indent=4))
+output_file.write(json.dumps({"voltage": voltages,
+                              "current": currents,
+                              "voltage_rms": voltage_rms,
+                              "current_rms": current_rms,
+                              "date": time.asctime()}, indent=4))
 output_file.close()
 
 power_fd = open(DATA_PATH + "/rms_values.csv", 'a+')
