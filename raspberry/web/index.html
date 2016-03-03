@@ -65,6 +65,11 @@
                 <div id="inst_current"></div>
                 <h1 id="current_rms"></h1>
             </div>
+
+            <div style="text-align: center">
+                Power
+                <div id="power"></div>
+            </div>
         </div>
     </div>
     <footer style="text-align: center">
@@ -91,10 +96,24 @@
         Plotly.newPlot( INST_CURR, [{
                      y: DATA["current"] }], {
                      margin: { t: 0 } } );
+        document.getElementById("channel_num").innerHTML = "Channel " + channel;
         document.getElementById("voltage_rms").innerHTML = "Vrms: " + DATA["voltage_rms"];
         document.getElementById("current_rms").innerHTML = "Irms: " + DATA["current_rms"];
         document.getElementById("aq_date").innerHTML = DATA["date"];
-        document.getElementById("channel_num").innerHTML = "Channel " + channel;
+
+        var request = new XMLHttpRequest();
+        request.open("GET", "rms_values_" + channel +".csv", false);
+        request.send(null)
+        var data = request.responseText.split("\n")
+        var power = []
+        for (var line in data) {
+            var values = data[line].split(", ")
+            power.push(values[0]*values[1])
+        }
+        POWER = document.getElementById('power');
+        Plotly.newPlot( POWER, [{
+                y: power }], {
+                margin: { t: 0 } } );
     }
 </script>
 <script src="js/ui.js"></script>
