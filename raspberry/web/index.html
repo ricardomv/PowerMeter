@@ -73,6 +73,7 @@
         </div>
     </div>
     <footer style="text-align: center">
+        <a id="download_csv_file" class="pure-button pure-button-primary">Download .csv</a>
         <p id="aq_date"></p>
     </footer>
 </div>
@@ -100,19 +101,27 @@
         document.getElementById("voltage_rms").innerHTML = "Vrms: " + DATA["voltage_rms"];
         document.getElementById("current_rms").innerHTML = "Irms: " + DATA["current_rms"];
         document.getElementById("aq_date").innerHTML = DATA["date"];
+        document.getElementById("download_csv_file").href = "rms_values_" + channel +".csv";
 
         var request = new XMLHttpRequest();
         request.open("GET", "rms_values_" + channel +".csv", false);
         request.send(null)
         var data = request.responseText.split("\n")
         var power = []
+        var date = []
         for (var line in data) {
-            var values = data[line].split(", ")
-            power.push(values[0]*values[1])
+            if (!data[line])
+                break;
+            var values = data[line].split(",")
+            power.push(values[1]*values[2])
+            var time = new Date()
+            time.setTime(values[0]*1000)
+            date.push(time)
         }
         POWER = document.getElementById('power');
         Plotly.newPlot( POWER, [{
-                y: power }], {
+                y: power,
+                x: date}], {
                 margin: { t: 0 } } );
     }
 </script>
