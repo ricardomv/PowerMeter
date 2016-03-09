@@ -49,5 +49,5 @@ output_file.write(json.dumps({"voltage": voltages,
 output_file.close()
 
 power_fd = open(DATA_PATH + "/rms_values_" + CHANNEL + ".csv", 'a+')
-power_fd.write(str(voltage_rms) + ", " + str(current_rms) + "\n")
+power_fd.write(str(time.time()) + ", " + str(voltage_rms) + ", " + str(current_rms) + "\n")
 power_fd.close()
