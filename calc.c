@@ -10,18 +10,18 @@
 #define PI 3.14159265
 #define PI_3 PI/3.0
 
-#define VRES_IN         10.0        // ohm, sample resistor on priminary of PT 
-#define VRES_OUT        1.0           // ohm, sample resistors on secondary of PT 
+#define VRES_IN         10.0        // ohm, sample resistor on priminary of PT
+#define VRES_OUT        1.0           // ohm, sample resistors on secondary of PT
 #define PT_RATIO        233/9.05             // 1:1 (IN/OUT), spec of PT in this application
 #define FULL_VOLT_CH    3.3             // Full scale of voltage channel input, Refer to datasheet
 
-#define IRES_OUT        1000.0          // ohm, sample resistors on secondary of CT 
+#define IRES_OUT        1000.0          // ohm, sample resistors on secondary of CT
 #define CT_RATIO        3000.0          // 2000:1 (IN/OUT), spec of CT in this application
 #define FULL_CUR_CH     3.3             // Full scale of voltage channel input, Refer to datasheet
-    
-#define sqrt_2          1.4142136       //sqrt(2) 
 
-#define VOTAGE_CH_COEF  (VRES_IN*PT_RATIO*FULL_VOLT_CH/VRES_OUT)/32768.0/sqrt_2*1.11
+#define sqrt_2          1.4142136       //sqrt(2)
+
+#define VOTAGE_CH_COEF  (VRES_IN*PT_RATIO*FULL_VOLT_CH/VRES_OUT)/32768.0/sqrt_2
 #define CURRENT_CH_COEF  (FULL_CUR_CH*CT_RATIO/IRES_OUT)/32768.0/sqrt_2
 #define POWER_CH_COEFF  VOTAGE_CH_COEF*CURRENT_CH_COEF*2
 
@@ -64,7 +64,7 @@ float calculate_angle(int real, int imag)
 		 else
 		  Theta = 3*PI/2;
 	}
-	else 
+	else
 	{
 		 temp = (float)(imag)/(float)real;
 		 Theta = atanf(temp);
@@ -88,7 +88,7 @@ void computeSample (int v_ch, int i_ch)
     float vrms, irms, act_power, react_power, apar_power;
     float vcal[3] = {1.11, 1, 1}, ical[7] = {1, 1, 1, 1, 1, 1, 1};
     int i;
-    
+
     fix_fft((short *)sampleVArray, (short *)sampleVArrayImag, 7);
     fix_fft((short *)sampleCArray, (short *)sampleCArrayImag, 7);
 
@@ -114,7 +114,7 @@ void computeSample (int v_ch, int i_ch)
     DFTOut_I[0].real = 0;
     DFTOut_V[0].imag = 0;
     DFTOut_I[0].imag = 0;
-    
+
     ComputeMagnitude((int*)&DFTOut_V[0].real, DFTMagnitude, NSAMPLES/2, &amplitude);
     //neutralAmplitude = ComputeNeutralAmplitude((int*)&DFTOut_V[0].real, NSAMPLES/2);
     // as the result was divide by 1024 in computeMagnitude(),
@@ -125,7 +125,7 @@ void computeSample (int v_ch, int i_ch)
         sprintf(str, "%ld\r\n", DFTMagnitude[i]);
         Debug(str);
     }
-    
+
     vrms = sqrt((float)amplitude)*32*VOTAGE_CH_COEF*vcal[v_ch];
 
     sprintf(str, "voltage_rms=%f\r\n", vrms);
@@ -134,7 +134,7 @@ void computeSample (int v_ch, int i_ch)
     Debug(str);
 
     ComputeMagnitude((int*)&DFTOut_I[0].real, DFTMagnitude, NSAMPLES/2, &amplitude);
-    
+
     irms = sqrt((float)amplitude)*32*CURRENT_CH_COEF*ical[i_ch];
 
     sprintf(str, "current_rms=%f\r\n", irms);
@@ -151,7 +151,7 @@ void computeSample (int v_ch, int i_ch)
     // power[1] //total harmonic active power
     // power[2] //fundemental reactive power
     // power[3] //total harmonic reactive power
-    
+
     act_power = (float)(power[0] + power[1])*POWER_CH_COEFF;
     sprintf(str, "active=%f\r\n", act_power);
     writeStringUART1(str);
