@@ -10,9 +10,9 @@
 #define PI 3.14159265
 #define PI_3 PI/3.0
 
-#define VRES_IN         10.0        // ohm, sample resistor on priminary of PT
-#define VRES_OUT        1.0           // ohm, sample resistors on secondary of PT
-#define PT_RATIO        233/9.05             // 1:1 (IN/OUT), spec of PT in this application
+#define VRES_IN         10.0            // ohm, sample resistor on priminary of PT
+#define VRES_OUT        1.0             // ohm, sample resistors on secondary of PT
+#define PT_RATIO        233/9.05        // 1:1 (IN/OUT), spec of PT in this application
 #define FULL_VOLT_CH    3.3             // Full scale of voltage channel input, Refer to datasheet
 
 #define IRES_OUT        1000.0          // ohm, sample resistors on secondary of CT
@@ -120,10 +120,10 @@ void computeSample (int v_ch, int i_ch)
     // power[2] //fundemental reactive power
     // power[3] //total harmonic reactive power
 
-    act_power = (float)(power[0] + power[1])*POWER_CH_COEFF;
+    act_power = (float)(power[0] + power[1]) * POWER_CH_COEFF;
     sprintf(str, "active=%f\r\n", act_power);
     writeStringUART1(str);
-    sprintf(str, "reactive=%d\r\n", (power[2]+power[3])*POWER_CH_COEFF);
+    sprintf(str, "reactive=%d\r\n", (power[2]+power[3]) * POWER_CH_COEFF);
     writeStringUART1(str);
     apar_power = vrms*irms;
     sprintf(str, "aparent=%f\r\n", apar_power);
