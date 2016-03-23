@@ -18,11 +18,9 @@ function reload_data() {
         if (request_inst.status === 404) {
             Plotly.deleteTraces('inst_voltage', 0);
             Plotly.deleteTraces('inst_current', 0);
-            document.getElementById("voltage_rms").innerHTML = "Vrms: 0";
-            document.getElementById("current_rms").innerHTML = "Irms: 0";
-            document.getElementById("aq_date").innerHTML = "";
             gauges["voltage"].redraw(0);
             gauges["current"].redraw(0);
+            document.getElementById("aq_date").innerHTML = "";
             return;
         }
         var DATA = JSON.parse(request_inst.responseText);
@@ -71,9 +69,9 @@ function reload_data() {
                         autorange: true
                     }
                 } );
-        document.getElementById("download_csv_file").href = "rms_values_" + m_channel +".csv";
     }
     request_rms.send(null);
+    document.getElementById("download_csv_file").href = "rms_values_" + m_channel +".csv";
 }
 var m_interval = setInterval(reload_data, 60 * 1000, m_channel);
 var gauges = [];
