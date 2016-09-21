@@ -10,9 +10,9 @@
 #define PI 3.14159265
 #define PI_3 PI/3.0
 
-#define VRES_IN         10.0        // ohm, sample resistor on priminary of PT
-#define VRES_OUT        1.0           // ohm, sample resistors on secondary of PT
-#define PT_RATIO        233/9.05             // 1:1 (IN/OUT), spec of PT in this application
+#define VRES_IN         10.0            // ohm, sample resistor on priminary of PT
+#define VRES_OUT        1.0             // ohm, sample resistors on secondary of PT
+#define PT_RATIO        233/9.05        // 1:1 (IN/OUT), spec of PT in this application
 #define FULL_VOLT_CH    3.3             // Full scale of voltage channel input, Refer to datasheet
 
 #define IRES_OUT        1000.0          // ohm, sample resistors on secondary of CT
@@ -51,34 +51,6 @@ extern void ComputePower(int* voltage_buffer, int* current_buffer, int* output, 
 extern long ComputeNeutralAmplitude(int*, int);
 
 unsigned long DFTMagnitude[64] __attribute__((space(xmemory), far));
-
-float calculate_angle(int real, int imag)
-{
-	float temp, Theta;
-
-	//calculate the angle
-	if(real==0)
-	{
-		 if(imag > 0)
-		  Theta = PI/2;
-		 else
-		  Theta = 3*PI/2;
-	}
-	else
-	{
-		 temp = (float)(imag)/(float)real;
-		 Theta = atanf(temp);
-
-		 if(real < 0)
-			   Theta = PI + Theta;
-		 else
-		{
-			  if(imag<0)
-			   Theta = 2*PI + Theta;
-		}
-	}
-	return Theta;
-}
 
 void computeSample (int v_ch, int i_ch)
 {
@@ -141,10 +113,6 @@ void computeSample (int v_ch, int i_ch)
     writeStringUART1(str);
     sprintf(str, "current_amplitude=%f\r\n", DFTMagnitude[0] * CURRENT_CH_COEF);
     Debug(str);
-    sprintf(str, "anglev=%f\r\n", calculate_angle(DFTOut_V[1].real, DFTOut_V[1].imag));
-    writeStringUART1(str);
-    sprintf(str, "anglec=%f\r\n", calculate_angle(DFTOut_I[1].real, DFTOut_I[1].imag));
-    writeStringUART1(str);
     // now calculate the active power, re-active power, apparent power and the power factor
     ComputePower((int*)DFTOut_V, (int*)DFTOut_I, (int*)&power, 64 -1);
     // power[0] //fundemental active power
@@ -152,10 +120,10 @@ void computeSample (int v_ch, int i_ch)
     // power[2] //fundemental reactive power
     // power[3] //total harmonic reactive power
 
-    act_power = (float)(power[0] + power[1])*POWER_CH_COEFF;
+    act_power = (float)(power[0] + power[1]) * POWER_CH_COEFF;
     sprintf(str, "active=%f\r\n", act_power);
     writeStringUART1(str);
-    sprintf(str, "reactive=%d\r\n", (power[2]+power[3])*POWER_CH_COEFF);
+    sprintf(str, "reactive=%d\r\n", (power[2]+power[3]) * POWER_CH_COEFF);
     writeStringUART1(str);
     apar_power = vrms*irms;
     sprintf(str, "aparent=%f\r\n", apar_power);

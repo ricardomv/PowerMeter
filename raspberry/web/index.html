@@ -16,7 +16,11 @@
         <link rel="stylesheet" href="css/layouts/side-menu.css">
     <!--<![endif]-->
 
-<script src="js/plotly.min.js"></script>
+<link rel="stylesheet" href="css/layouts/tabs.css">
+<script type="text/javascript" src="js/plotly.min.js"></script>
+<script type="text/javascript" src="js/d3.v2.js"></script>
+<script type="text/javascript" src="js/gauge.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
 
 </head>
 <body onload="init()">
@@ -34,7 +38,7 @@
 
             <ul class="pure-menu-list">
                 <li class="pure-menu-item"><a href="#" class="pure-menu-link">Real-time</a></li>
-                <li class="pure-menu-item"><a href="#" class="pure-menu-link">History</a></li>
+                <li class="pure-menu-item"><a href="totals.html" class="pure-menu-link">Totals</a></li>
                 <li class="pure-menu-item"><a href="#" class="pure-menu-link">Config</a></li>
             </ul>
         </div>
@@ -42,29 +46,45 @@
 
     <div id="main">
         <div class="header">
+            <div style="position: absolute; left: 180px; top: 20px">
+                <span id="voltageGaugeContainer"></span>
+                <span id="currentGaugeContainer"></span>
+            </div>
             <h1 id="hostname"></h1>
             <h2>Real time data from aquisition board.</h2>
-                    <a onclick="change_channel(0)" class="pure-button">Channel 0</a>
-                    <a onclick="change_channel(1)" class="pure-button">Channel 1</a>
-                    <a onclick="change_channel(2)" class="pure-button">Channel 2</a>
-                    <a onclick="change_channel(3)" class="pure-button">Channel 3</a>
-                    <a onclick="change_channel(4)" class="pure-button">Channel 4</a>
-                    <a onclick="change_channel(5)" class="pure-button">Channel 5</a>
-                    <a onclick="change_channel(6)" class="pure-button">Channel 6</a>
+            <a onclick="change_channel(0)" class="pure-button">Channel 0</a>
+            <a onclick="change_channel(1)" class="pure-button">Channel 1</a>
+            <a onclick="change_channel(2)" class="pure-button">Channel 2</a>
+            <a onclick="change_channel(3)" class="pure-button">Channel 3</a>
+            <a onclick="change_channel(4)" class="pure-button">Channel 4</a>
+            <a onclick="change_channel(5)" class="pure-button">Channel 5</a>
+            <a onclick="change_channel(6)" class="pure-button">Channel 6</a>
+            <a id="download_csv_file" class="pure-button pure-button-primary">Download .csv</a>
         </div>
 
         <h2 id="channel_num" class="content-subhead" style="margin-left: 50px"></h2>
         <div style="width: 90%; overflow: hidden; margin-left: auto; margin-right: auto">
-            <div style="width: 50%; float: left; text-align: center">
-                Voltage
+    <div class="tabs">
+
+       <div class="tab">
+           <input type="radio" id="tab-1" name="tab-group-1" checked>
+           <label for="tab-1">Voltage</label>
+
+           <div class="content">
                 <div id="inst_voltage"></div>
-                <h1 id="voltage_rms"></h1>
-            </div>
-            <div style="width: 50%; margin-left: 50%; text-align: center">
-                Current
+           </div>
+       </div>
+
+       <div class="tab">
+           <input type="radio" id="tab-2" name="tab-group-1">
+           <label for="tab-2">Current</label>
+
+           <div class="content">
                 <div id="inst_current"></div>
-                <h1 id="current_rms"></h1>
-            </div>
+           </div>
+       </div>
+
+    </div>
 
             <div style="text-align: center">
                 Power
