@@ -19,6 +19,7 @@ try:
     port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=3.0)
 except serial.SerialException as e:
     print("could not open serial port '{}': {}".format(com_port, e))
+    exit()
 
 port.xonxoff = False
 
