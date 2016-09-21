@@ -15,6 +15,8 @@ DATA_PATH = args.data_path
 NSAMPLES = 128
 CHANNEL = args.channel
 
+time.sleep(CHANNEL * 10)
+
 try:
     port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=3.0)
 except serial.SerialException as e:
