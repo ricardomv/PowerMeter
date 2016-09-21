@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="css/layouts/side-menu.css">
     <!--<![endif]-->
 
+<link rel="stylesheet" href="css/layouts/tabs.css">
 <script type="text/javascript" src="js/plotly.min.js"></script>
 <script type="text/javascript" src="js/d3.v2.js"></script>
 <script type="text/javascript" src="js/gauge.js"></script>
@@ -63,14 +64,27 @@
 
         <h2 id="channel_num" class="content-subhead" style="margin-left: 50px"></h2>
         <div style="width: 90%; overflow: hidden; margin-left: auto; margin-right: auto">
-            <div style="width: 50%; float: left; text-align: center">
-                Voltage
+    <div class="tabs">
+
+       <div class="tab">
+           <input type="radio" id="tab-1" name="tab-group-1" checked>
+           <label for="tab-1">Voltage</label>
+
+           <div class="content">
                 <div id="inst_voltage"></div>
-            </div>
-            <div style="width: 50%; margin-left: 50%; text-align: center">
-                Current
+           </div>
+       </div>
+
+       <div class="tab">
+           <input type="radio" id="tab-2" name="tab-group-1">
+           <label for="tab-2">Current</label>
+
+           <div class="content">
                 <div id="inst_current"></div>
-            </div>
+           </div>
+       </div>
+
+    </div>
 
             <div style="text-align: center">
                 Power
