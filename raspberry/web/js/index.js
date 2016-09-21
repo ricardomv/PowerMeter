@@ -26,9 +26,11 @@ function reload_data() {
         var DATA = JSON.parse(request_inst.responseText);
         Plotly.newPlot('inst_voltage', [{
                        y: DATA["voltage"] }], {
+                       yaxis: { range: [-32768, 32768]},
                        margin: { t: 0 } } );
         Plotly.newPlot('inst_current', [{
                        y: DATA["current"] }], {
+                       yaxis: { range: [-32768, 32768]},
                        margin: { t: 0 } } );
         document.getElementById("aq_date").innerHTML = DATA["date"];
         gauges["voltage"].redraw(DATA["voltage_rms"]);
