@@ -28,12 +28,24 @@
       </div>
       <div id="main">
           <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
-      </div>
+          <p>Channel 0: <span id="ch0_wh">0</span> Wh </p>
+    	  <p>Channel 1: <span id="ch1_wh">0</span> Wh </p>
+    	  <p>Channel 2: <span id="ch2_wh">0</span> Wh </p>
+    	  <p>Channel 3: <span id="ch3_wh">0</span> Wh </p>
+    	  <p>Test duration: <span id="duration">0</span> hours </p>
+    	  <p>Estimated Monthly: <span id="estimated_monthly">0</span> kWh </p>
+    	  <p>Estimated Monthly: <span id="estimated_monthly_bill">0</span> € </p>
+          </div>
   <script>
 var stacksDiv = document.getElementById("myDiv");
 
+function financial(x) {
+  return Number.parseFloat(x).toFixed(2);
+}
+
 function stackedArea() {
     var traces = []
+    var total_wh = 0
     for(var i=0; i<7; i++) {
         var request_rms = new XMLHttpRequest();
         request_rms.open("GET", "rms_values_" + i +".csv", false);
@@ -45,19 +57,26 @@ function stackedArea() {
             if (!data[line])
                 break;
             var values = data[line].split(",")
-            if (i>0) {
-                power.push(traces[i-1]['y'][power.length] + values[1]*values[2])
-            } else {
-                power.push(values[1]*values[2])
-            }
+            power.push(values[1]*values[2])
             var time = new Date()
             time.setTime(values[0]*1000)
             date.push(time)
         }
         traces[i] = {'name': 'Channel ' + i,'y': power, 'x': date, fill: 'tozeroy'}
+	if(power.length) {
+		var channel_wh = power.reduce(function(a, b) { return a + b; })/power.length;
+		total_wh += channel_wh;
+		document.getElementById("ch"+i+"_wh").innerHTML = channel_wh.toFixed(2);
+		var duration = (date[date.length-1]-date[0])/ (60*60*1000);
+    		document.getElementById("duration").innerHTML = duration.toFixed(2);
+	}
     }
+    document.getElementById("estimated_monthly").innerHTML = financial( total_wh * 24 * 30 / 1000 );
+    document.getElementById("estimated_monthly_bill").innerHTML = financial((total_wh * 24 * 30 / 1000)*0.16 );
+
     return traces.reverse();
 }
+
 var layout = {
     title: 'Sum of all channels power',
     xaxis: {
